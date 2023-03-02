@@ -57,28 +57,24 @@ void ACart2::Tick(float DeltaTime)
 		{
 			UE_LOG(LogTemp, Warning, TEXT("LumberInBound: %d LumberMaxCapacity: %d"), SewingMachineClass->LumberInbound, SewingMachineClass->LumberFactoryCapacity);
 			//check if Lumber production is full
-			if (LumberjackClass->LumberQuantity >= LumberjackClass->LumberMaxQuantity && 
+			if (LumberjackClass->LumberQuantity >= MaxCapacity && 
 				SewingMachineClass->LumberInbound ==0)
 				//&& (SewingMachineClass->LumberFactoryCapacity - SewingMachineClass->LumberInbound) > LumberInCart)
 			{
-				LoadUnloadTime = FMath::FRandRange(1.0f, 3.0f);
 				this->Destination = Lumberjack->GetActorLocation();
 				LoadItems();
-				Move = true;
 			}
 			//check if Steel production is full
-			else if (FurnaceClass->SteelQuantity >= FurnaceClass->SteelMaxQuantity
+			else if (FurnaceClass->SteelQuantity >= MaxCapacity
 				&& SewingMachineClass->SteelInbound ==0) //SewingMachineClass->SteelFactoryCapacity - 1 && 
 				//(SewingMachineClass->SteelFactoryCapacity - SewingMachineClass->SteelInbound) > SteelInCart)
 			{
-				LoadUnloadTime = FMath::FRandRange(1.0f, 3.0f);
 				this->Destination = SteelBeamFurnace->GetActorLocation();
 				LoadItems();
-				Move = true;
 			}
 			else {
 				this->Destination = Garage2->GetActorLocation();
-				Move = true;
+				TimeElapsed += LoadUnloadTime;
 			}
 			
 		}
@@ -86,20 +82,18 @@ void ACart2::Tick(float DeltaTime)
 		{
 			if (LumberInCart > 0 || SteelInCart > 0)
 			{
-				LoadUnloadTime = FMath::FRandRange(1.0f, 3.0f);
 				this->Destination = SewingMachineFactory->GetActorLocation();
 				UnloadItems();
-				Move = true;
 			}
-			/*if (SewingMachineClass->LumberInbound >= SewingMachineClass->LumberFactoryCapacity
-				|| SewingMachineClass->SteelInbound >= SewingMachineClass->SteelFactoryCapacity)
-			{
-				this->Destination = Garage2->GetActorLocation();
-				Move = true;
-			}*/
 
 		}
 		
+	}
+	else if (Move == false)
+	{
+		Move = true;
+		LoadUnloadTime = FMath::FRandRange(1.0f, 3.0f);
+		TimeElapsed = 0;
 	}
 }
 
@@ -127,8 +121,8 @@ void ACart2::LoadItems()
 {
 	if (CurrentLocation == Lumberjack->GetActorLocation())
 	{
-		LumberInCart += LumberjackClass->LumberQuantity;
-		LumberjackClass->LumberQuantity = 0;
+		LumberInCart += MaxCapacity;
+		LumberjackClass->LumberQuantity -= MaxCapacity;
 		Capacity = LumberInCart;
 	}
 	if (CurrentLocation == SteelBeamFurnace->GetActorLocation())

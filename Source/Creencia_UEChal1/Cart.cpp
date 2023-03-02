@@ -61,42 +61,42 @@ void ACart::Tick(float DeltaTime)
 		if (Capacity < MaxCapacity && AvailableSpace == MaxCapacity)
 		{
 			//check if coal production is full
-			if (CoalMineClass->CoalQuantity >= CoalMineClass->CoalMaxQuantity
+			if (CoalMineClass->CoalQuantity >= MaxCapacity
 				&& FurnaceClass->CoalInbound == 0 &&FurnaceClass->SteelQuantity < FurnaceClass->SteelMaxQuantity)
 			{
-				LoadUnloadTime = FMath::FRandRange(1.0f, 3.0f);
 				this->Destination = CoalMine->GetActorLocation();
 				LoadItems();
-				Move = true;
 			}
 			//check if iron production is full
-			else if (IronMineClass->IronQuantity >= IronMineClass->IronMaxQuantity
+			else if (IronMineClass->IronQuantity >= MaxCapacity
 				&& FurnaceClass->IronInbound == 0 && FurnaceClass->SteelQuantity < FurnaceClass->SteelMaxQuantity)
 			{
-				LoadUnloadTime = FMath::FRandRange(1.0f, 3.0f);
 				this->Destination = IronMine->GetActorLocation();
-				LoadItems();
-				Move = true;
+				LoadItems();	
 			}
 			else {
 				this->Destination = Garage->GetActorLocation();
-				Move = true;
+				TimeElapsed += LoadUnloadTime;
 			}
 			
 		}
-
 
 		//If There are no slots for the cart, the cart will uload items til empty
 		else if (Capacity >= MaxCapacity || AvailableSpace != MaxCapacity)
 		{
 			if (IronInCart > 0 || CoalInCart > 0 && FurnaceClass->SteelQuantity < FurnaceClass->SteelMaxQuantity)
 			{
-				LoadUnloadTime = FMath::FRandRange(1.0f, 3.0f);
 				this->Destination = SteelBeamFurnace->GetActorLocation();
 				UnloadItems();
-				Move = true;
+				
 			}
 		}
+	}
+	else if (Move == false)
+	{
+		Move = true;
+		LoadUnloadTime = FMath::FRandRange(2.0f, 4.0f);
+		TimeElapsed = 0;
 	}
 }
 void ACart::LoadItems()
@@ -105,18 +105,18 @@ void ACart::LoadItems()
 	if (CurrentLocation == CoalMine->GetActorLocation())
 	{
 
-			CoalInCart += CoalMineClass->CoalQuantity;
-			CoalMineClass->CoalQuantity = 0;
-			Capacity = CoalInCart;
+		CoalInCart += MaxCapacity;
+		CoalMineClass->CoalQuantity -= MaxCapacity;
+		Capacity = CoalInCart;
 	
 
 	}
 	if (CurrentLocation == IronMine->GetActorLocation())
 	{
 		
-			IronInCart += IronMineClass->IronQuantity;
-			IronMineClass->IronQuantity = 0;
-			Capacity = IronInCart;
+		IronInCart += MaxCapacity;
+		IronMineClass->IronQuantity -= MaxCapacity;
+		Capacity = IronInCart;
 		
 	}
 	

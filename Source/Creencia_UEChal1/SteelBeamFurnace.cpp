@@ -30,7 +30,7 @@ void USteelBeamFurnace::TickComponent(float DeltaTime, ELevelTick TickType, FAct
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
 	// ...
-	if (CoalInbound >= 1 && IronInbound >= 1) {
+	if (CoalInbound >= 1 && IronInbound >= 1 && SteelQuantity < SteelMaxQuantity) {
 		SteelProductionTime += DeltaTime;
 
 		if (SteelProductionTime >= MaxSteelProductionTime) {
