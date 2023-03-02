@@ -27,12 +27,12 @@ public:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 		float CoalProductionTime;
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		int CoalQuantity = 0;
 
 	UPROPERTY(EditAnywhere)
 		int CoalMaxQuantity = 3;
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere,BlueprintReadWrite)
 		float MaxCoalProductionTime = 5.0f;
 	UPROPERTY(EditAnywhere)
 		int ProductionCapability = 1;

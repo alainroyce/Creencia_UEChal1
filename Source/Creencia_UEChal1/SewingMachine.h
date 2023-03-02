@@ -29,7 +29,7 @@ public:
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
 		float MachineProductionTime = 0;
 
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		float MaxMachineProductionTime = 10.0f;
 	UPROPERTY(EditAnywhere)
 		int ProductionCapability = 1;

@@ -34,7 +34,7 @@ public:
 
 	UPROPERTY(EditAnywhere)
 		int LumberMaxQuantity = 3;
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		float MaxLumberProductionTime = 2.5f;
 	UPROPERTY(EditAnywhere)
 		int ProductionCapability = 1;

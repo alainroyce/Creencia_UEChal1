@@ -36,17 +36,16 @@ public:
 
 	
 	//Actor Assignments
-	UPROPERTY(EditInstanceOnly, BlueprintReadOnly, Category = "ActorAssignment")
-		class AActor* SewingMachineFactory;
-	UPROPERTY(EditInstanceOnly, BlueprintReadOnly, Category = "ActorAssignment")
-		class AActor* Lumberjack;
+	
 	UPROPERTY(EditInstanceOnly, BlueprintReadOnly, Category = "ActorAssignment")
 		class AActor* CoalMine;
 	UPROPERTY(EditInstanceOnly, BlueprintReadOnly, Category = "ActorAssignment")
 		class AActor* SteelBeamFurnace;
 	UPROPERTY(EditInstanceOnly, BlueprintReadOnly, Category = "ActorAssignment")
 		class AActor* IronMine;
-	
+	UPROPERTY(EditInstanceOnly, BlueprintReadOnly, Category = "ActorAssignment")
+		class AActor* Garage;
+
 	// CartVariables
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "CartVariables")
 		float Speed;
@@ -56,17 +55,17 @@ public:
 		int MaxCapacity = 3;
 
 	//In Cart Items
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "InCartItems")
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "InCartItems")
 		int IronInCart = 0;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "InCartItems")
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "InCartItems")
 		int CoalInCart = 0;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "InCartItems")
-		int SteelInCart = 0;
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "InCartItems")
-		int LumberInCart = 0;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Timer")
+		float Timer = 0;
+	
 
 	UPROPERTY(VisibleAnywhere)
-		int AvailableSpace = 0;
+		int AvailableSpace = MaxCapacity - Capacity;
 
 
 
@@ -84,6 +83,12 @@ protected:
 	bool Move = true;
 	UPROPERTY(VisibleAnywhere)
 	float Ticks = 0;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+		float TimeElapsed = 0;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite)
+		float LoadUnloadTime=0;
 	UPROPERTY(EditAnywhere, Category = "CartVariables")
 	float MinTime = 8.0f;
 
@@ -94,10 +99,6 @@ public:
 	//Building Classes
 	UPROPERTY(VisibleAnywhere)
 	UCoalMine* CoalMineClass;
-	UPROPERTY(VisibleAnywhere)
-	USewingMachine* SewingMachineClass;
-	UPROPERTY(VisibleAnywhere)
-	ULumberjack* LumberjackClass;
 	UPROPERTY(VisibleAnywhere)
 	UIronMine* IronMineClass;
 	UPROPERTY(VisibleAnywhere)

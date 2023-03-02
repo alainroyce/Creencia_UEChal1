@@ -7,7 +7,7 @@
 #include "IronMine.generated.h"
 
 
-UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
+UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent),BLUEPRINTABLE )
 class CREENCIA_UECHAL1_API UIronMine : public UActorComponent
 {
 	GENERATED_BODY()
@@ -33,7 +33,7 @@ public:
 
 	UPROPERTY(EditAnywhere)
 		int IronMaxQuantity = 3;
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		float MaxIronProductionTime = 5.0f;
 	UPROPERTY(EditAnywhere)
 		int ProductionCapability = 1;

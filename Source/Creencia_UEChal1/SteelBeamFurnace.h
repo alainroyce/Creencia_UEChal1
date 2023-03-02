@@ -26,7 +26,7 @@ public:
 
 	UPROPERTY(EditAnywhere)
 		int SteelMaxQuantity = 3;
-	UPROPERTY(EditAnywhere)
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
 		float MaxSteelProductionTime = 2.5f;
 	UPROPERTY(EditAnywhere)
 		int ProductionCapability = 1;
@@ -37,7 +37,7 @@ public:
 		int IronInbound = 0;
 	UPROPERTY(EditAnywhere)
 		int CoalInbound = 0;
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly)
 		float SteelProductionTime = 0;
 	UPROPERTY(EditAnywhere)
 		int IronFactoryCapacity = 3;
